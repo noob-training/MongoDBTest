@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Student</title>
+        <body>
+            <a href="/">Back to Home</a><br/>
+            <a href="/students/add">Add Students</a>
+            <h1>List of students</h1>
+            
+            <ul>
+            {{#each students}}
+                <li>
+                    <a href="/students/{{_id}}"><h2>{{name}}</h2></a>
+                </li>
+            {{/each}}
+            </ul>
+        <body>
+</html>

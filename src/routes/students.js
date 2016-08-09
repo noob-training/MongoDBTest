@@ -47,12 +47,77 @@ router.route('/add')
         });
     });
 
+router.route('/delete/:id')
+    .post(function (req, res) {
+        var id = req.params.id;//gets parameter id from url(GET method)
+        var db = dbhelper.db; //gets db from dbhelper
+        var collection = db.collection('studentCollection');//gets the colelction from database
+
+        var objId = new dbhelper.ObjectID(id); //convert string id to ObjectID
+
+        //finds one record where _id matches our objectID
+        collection.remove({ _id: objId }, { justOne: true }, function (err, data) {
+            if (err) {
+                console.log("Error: " + JSON.stringify(err));
+                res.redirect('/students/id');
+            }
+            if (data) {
+                console.log("Delete Data: " + JSON.stringify(data));
+                res.redirect('/students'); //pass the student data to student.hbs
+            }
+        });
+    });
+
+router.route('/update/:id')
+    .get(function (req, res) {
+        var id = req.params.id;//gets parameter id from url(GET method)
+        var db = dbhelper.db; //gets db from dbhelper
+        var collection = db.collection('studentCollection');//gets the colelction from database
+
+        var objId = new dbhelper.ObjectID(id); //convert string id to ObjectID
+
+        //finds one record where _id matches our objectID
+        collection.findOne({ _id: objId }, function (err, data) {
+            if (err) {
+                console.log("Update Error: " + JSON.stringify(err));
+            }
+            if (data) {
+                console.log("Update Data: " + JSON.stringify(data));
+            }
+            res.render('updatestudent', data); //pass the student data to student.hbs
+        });
+    })
+    .post(function (req, res) {
+        var id = req.params.id;//gets parameter id from url(GET method)
+        var db = dbhelper.db; //gets db from dbhelper
+        var collection = db.collection('studentCollection');//gets the colelction from database
+
+        var objId = new dbhelper.ObjectID(id); //convert string id to ObjectID
+
+        var params = {
+            name: req.body.name,
+            course: req.body.course,
+            duration: req.body.duration
+        };
+        //finds one record where _id matches our objectID
+        collection.findOneAndUpdate({ _id: objId }, params, function (err, data) {
+            if (err) {
+                console.log("Error: " + JSON.stringify(err));
+                res.redirect('/students/update/id');
+            }
+            if (data) {
+                console.log("Delete Data: " + JSON.stringify(data));
+                res.redirect('/students/'+id); //pass the student data to student.hbs
+            }
+        });
+    });
+
 router.route('/:id')
     .get(function (req, res) {
         var id = req.params.id;//gets parameter id from url(GET method)
         var db = dbhelper.db; //gets db from dbhelper
         var collection = db.collection('studentCollection');//gets the colelction from database
-        
+
         var objId = new dbhelper.ObjectID(id); //convert string id to ObjectID
 
         //finds one record where _id matches our objectID

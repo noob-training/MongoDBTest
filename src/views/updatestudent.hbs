@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{name}}</title>
+    <body>
+        <a href="/students">Back to List</a>
+        <form method="POST" action="/students/update/{{_id}}">
+            <input type="text" name="name" placeholder="Enter new name" value='{{name}}'/><br/>
+            <input type="text" name="course" placeholder="Enter new course" value='{{course}}'/><br/>
+            <input type="text" name="duration" placeholder="Enter new duration" value='{{duration}}'/><br/>
+            <input type="submit" value="Update Student"/><br/>
+        </form>
+    </body>
+</html>

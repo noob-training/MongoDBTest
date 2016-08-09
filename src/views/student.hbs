@@ -7,5 +7,9 @@
             <h1>{{name}}</h1>
             <p>{{course}}</p>
             <p>{{duration}}</p>
+            <p><a href="/students/update/{{_id}}">Update Student</a></p><br/>
+            <form method="POST" action="/students/delete/{{_id}}">
+                <input type="submit" value="Delete Student"/>
+            </form>
         <body>
 </html>
